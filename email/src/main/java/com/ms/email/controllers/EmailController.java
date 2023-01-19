@@ -23,21 +23,29 @@ public class EmailController {
     private EmailService emailService;
 
     @PostMapping("/enviando-email")
-    public ResponseEntity<Email> enviandoEmail (@RequestBody @Valid EmailDto emailDto) {
+    public void enviandoEmail (@RequestBody @Valid EmailDto emailDto) {
         try {
+
+            log.info(String.format("[Envio-Email] - Solicitando envio de email para email: %s",
+                    emailDto.getEmailPara()));
+
             var entidade = Email.builder()
                     .emailPara(emailDto.getEmailPara())
-                    .emailRef(emailDto.getEmailRef())
-                    .propietario(emailDto.getPropietario())
-                    .sujeito(emailDto.getSujeito())
-                    .texto(emailDto.getTexto())
+//                    .emailRef(emailDto.getEmailRef())
+//                    .propietario(emailDto.getPropietario())
+//                    .sujeito(emailDto.getSujeito())
+//                    .texto(emailDto.getTexto())
                     .build();
 
-            emailService.enviaEmail(entidade);
+            emailService.enviarEmail(entidade);
 
-            return ResponseEntity.status(HttpStatus.CREATED).body(entidade);
-        }catch (EmailException e){
-            return ResponseEntity.status(HttpStatus.NO_CONTENT).body(new Email());
+            ResponseEntity.status(HttpStatus.CREATED).body("Sucesso");
+
+        } catch (EmailException e){
+
+            log.info(String.format("[Envio-Email] - Erro ao enviar email para: %s",
+                    emailDto.getEmailPara()));
+            ResponseEntity.status(HttpStatus.NO_CONTENT).body("Falha no envio");
         }
     }
 }
