@@ -29,6 +29,7 @@ public class EmailController {
             ResponseEntity.status(HttpStatus.CREATED).body("Sucesso");
 
         } catch (EmailException e){
+            
             log.info(String.format("[Envio-Email] - Erro ao enviar email para: %s",
                     emailPara));
             ResponseEntity.status(HttpStatus.NO_CONTENT).body("Falha no envio");
