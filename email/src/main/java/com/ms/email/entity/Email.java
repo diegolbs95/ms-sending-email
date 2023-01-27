@@ -18,13 +18,9 @@ public class Email {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long emailId;
-    private String propietario;
-    private String emailRef;
-    private String emailPara;
-    private String sujeito;
 
-    @Column(columnDefinition = "TEXT")
-    private String texto;
+    private String emailPara;
+
     private LocalDateTime dataEnvioEmail;
     private StatusEmail statusEmail;
 }
